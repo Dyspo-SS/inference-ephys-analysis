@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "inference-ephys-analysis"
+version = "0.1.0"
+description = "Animal-level analysis of event-aligned electrophysiological spike counts"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<3", "pandas>=2.0,<3", "scipy>=1.11,<2", "matplotlib>=3.7,<4"]
+
+[project.scripts]
+ephys-analysis = "inference_ephys.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
