@@ -1,0 +1,184 @@
+{
+  "study": "v1",
+  "input": "../data/v1_spike_counts.csv",
+  "bin_width_s": 0.25,
+  "baseline": [
+    -5,
+    0
+  ],
+  "invalid_bin_policy": "error",
+  "groups": {
+    "Paired": {
+      "stages": [
+        "Pairing"
+      ],
+      "color": "#3978AE",
+      "label": "Paired"
+    }
+  },
+  "regions": [
+    "V1"
+  ],
+  "stages": {
+    "Pairing": {
+      "epoch": [
+        -5,
+        25
+      ],
+      "events": {
+        "Sound": [
+          0,
+          10
+        ],
+        "Light": [
+          10,
+          20
+        ]
+      },
+      "windows": {
+        "Sound": {
+          "interval": [
+            0,
+            10
+          ],
+          "family": "v1_primary"
+        },
+        "Sound_early": {
+          "interval": [
+            0,
+            2
+          ],
+          "family": "v1_secondary"
+        },
+        "Sound_late": {
+          "interval": [
+            2,
+            10
+          ],
+          "family": "v1_secondary"
+        },
+        "Light": {
+          "interval": [
+            10,
+            20
+          ],
+          "family": "descriptive"
+        }
+      }
+    }
+  },
+  "statistics": {
+    "seed": 73001,
+    "bootstrap_draws": 10000,
+    "ci_level": 0.95,
+    "exact_limit": 2000000,
+    "permutation_draws": 99999
+  },
+  "glm": {
+    "enabled": false,
+    "stages": [
+      "Pairing",
+      "Conditioning",
+      "Test"
+    ],
+    "leave_one_trial_out_stages": [
+      "Conditioning"
+    ],
+    "ridge_lambda": 0.1,
+    "max_iter": 150,
+    "tolerance": 1e-08,
+    "gradient_tolerance": 1e-06,
+    "shift_draws": 999,
+    "failure_policy": "error",
+    "correction": "BH"
+  },
+  "rsa": {
+    "enabled": false,
+    "window_s": [
+      0,
+      2
+    ],
+    "conditions": {
+      "PS": {
+        "stage": "Pairing",
+        "onset_s": 0
+      },
+      "CL": {
+        "stage": "Conditioning",
+        "onset_s": 0
+      },
+      "TS": {
+        "stage": "Test",
+        "onset_s": 0
+      }
+    },
+    "primary_edge": [
+      "CL",
+      "TS"
+    ],
+    "fisher_clip_epsilon": 1e-06,
+    "variants": [
+      {
+        "name": "z_0to1s",
+        "window_s": [
+          0,
+          1
+        ],
+        "bin_width_s": 0.25,
+        "metric": "Response_Z"
+      },
+      {
+        "name": "z_0to2s",
+        "window_s": [
+          0,
+          2
+        ],
+        "bin_width_s": 0.25,
+        "metric": "Response_Z"
+      },
+      {
+        "name": "z_0to3s",
+        "window_s": [
+          0,
+          3
+        ],
+        "bin_width_s": 0.25,
+        "metric": "Response_Z"
+      },
+      {
+        "name": "z_0to2s_500ms",
+        "window_s": [
+          0,
+          2
+        ],
+        "bin_width_s": 0.5,
+        "metric": "Response_Z"
+      },
+      {
+        "name": "rate_0to2s",
+        "window_s": [
+          0,
+          2
+        ],
+        "bin_width_s": 0.25,
+        "metric": "FR_Hz"
+      }
+    ],
+    "count_controls": {
+      "enabled": false,
+      "units_per_stage": 6,
+      "repeats": 200
+    }
+  },
+  "plot": {
+    "font": "Arial",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "dpi": 450,
+    "heatmap_z_limit": 3
+  },
+  "v1_primary_window": "Sound"
+}

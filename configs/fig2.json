@@ -1,0 +1,256 @@
+{
+  "study": "association",
+  "input": "../data/fig2_spike_counts.csv",
+  "bin_width_s": 0.25,
+  "baseline": [
+    -5,
+    0
+  ],
+  "invalid_bin_policy": "error",
+  "groups": {
+    "Inference": {
+      "stages": [
+        "Pairing",
+        "Conditioning",
+        "Test"
+      ],
+      "color": "#E69F00",
+      "label": "Inference"
+    },
+    "No_pair": {
+      "stages": [
+        "Conditioning",
+        "Test"
+      ],
+      "color": "#009E73",
+      "label": "No pair"
+    }
+  },
+  "regions": [
+    "dCA1",
+    "ACC"
+  ],
+  "stages": {
+    "Pairing": {
+      "epoch": [
+        -5,
+        25
+      ],
+      "events": {
+        "Sound": [
+          0,
+          10
+        ],
+        "Light": [
+          10,
+          20
+        ]
+      },
+      "windows": {
+        "PS": {
+          "interval": [
+            0,
+            10
+          ],
+          "family": "association_responses"
+        },
+        "PL": {
+          "interval": [
+            10,
+            20
+          ],
+          "family": "association_responses"
+        }
+      }
+    },
+    "Conditioning": {
+      "epoch": [
+        -5,
+        17
+      ],
+      "events": {
+        "Light": [
+          0,
+          10
+        ],
+        "Shock": [
+          10,
+          12
+        ]
+      },
+      "windows": {
+        "CL": {
+          "interval": [
+            0,
+            10
+          ],
+          "family": "association_responses"
+        },
+        "CS": {
+          "interval": [
+            10,
+            12
+          ],
+          "family": "association_responses"
+        }
+      }
+    },
+    "Test": {
+      "epoch": [
+        -5,
+        15
+      ],
+      "events": {
+        "Sound": [
+          0,
+          10
+        ]
+      },
+      "windows": {
+        "TS": {
+          "interval": [
+            0,
+            10
+          ],
+          "family": "association_responses"
+        }
+      }
+    }
+  },
+  "statistics": {
+    "seed": 73001,
+    "bootstrap_draws": 10000,
+    "ci_level": 0.95,
+    "exact_limit": 2000000,
+    "permutation_draws": 99999
+  },
+  "glm": {
+    "enabled": true,
+    "stages": [
+      "Pairing",
+      "Conditioning",
+      "Test"
+    ],
+    "leave_one_trial_out_stages": [
+      "Conditioning"
+    ],
+    "ridge_lambda": 0.1,
+    "max_iter": 150,
+    "tolerance": 1e-08,
+    "gradient_tolerance": 1e-06,
+    "shift_draws": 999,
+    "failure_policy": "error",
+    "correction": "BH"
+  },
+  "rsa": {
+    "enabled": true,
+    "window_s": [
+      0,
+      2
+    ],
+    "conditions": {
+      "PS": {
+        "stage": "Pairing",
+        "onset_s": 0
+      },
+      "CL": {
+        "stage": "Conditioning",
+        "onset_s": 0
+      },
+      "TS": {
+        "stage": "Test",
+        "onset_s": 0
+      }
+    },
+    "primary_edge": [
+      "CL",
+      "TS"
+    ],
+    "fisher_clip_epsilon": 1e-06,
+    "variants": [
+      {
+        "name": "z_0to1s",
+        "window_s": [
+          0,
+          1
+        ],
+        "bin_width_s": 0.25,
+        "metric": "Response_Z"
+      },
+      {
+        "name": "z_0to2s",
+        "window_s": [
+          0,
+          2
+        ],
+        "bin_width_s": 0.25,
+        "metric": "Response_Z"
+      },
+      {
+        "name": "z_0to3s",
+        "window_s": [
+          0,
+          3
+        ],
+        "bin_width_s": 0.25,
+        "metric": "Response_Z"
+      },
+      {
+        "name": "z_0to2s_500ms",
+        "window_s": [
+          0,
+          2
+        ],
+        "bin_width_s": 0.5,
+        "metric": "Response_Z"
+      },
+      {
+        "name": "rate_0to2s",
+        "window_s": [
+          0,
+          2
+        ],
+        "bin_width_s": 0.25,
+        "metric": "FR_Hz"
+      }
+    ],
+    "count_controls": {
+      "enabled": false,
+      "units_per_stage": 6,
+      "repeats": 200
+    }
+  },
+  "plot": {
+    "font": "Arial",
+    "formats": [
+      "pdf",
+      "svg",
+      "png"
+    ],
+    "dpi": 450,
+    "heatmap_z_limit": 3
+  },
+  "behavior": {
+    "input": null,
+    "groups": [
+      "Inference",
+      "No_pair",
+      "No_conditioning"
+    ],
+    "reference": "Inference",
+    "controls": [
+      "No_pair",
+      "No_conditioning"
+    ],
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  }
+}
